@@ -1,0 +1,46 @@
+body{
+    background: linear-gradient(270deg,#bebebe 50%, #989898 50%);
+    font-family: sans-serif;
+}
+
+:root{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+svg{
+    background-color:#eee;
+    border-left:15px solid #8f8779;
+    border-right:15px solid #8f8779;
+    border-top:2px solid #8f8779;
+    border-bottom:2px solid #8f8779;
+    border-radius: 10px;
+}
+
+rect{
+    fill:#FFAF12;
+    opacity:0.3;
+}
+
+rect:hover{
+    fill:white;
+    opacity: 0.5;
+}
+
+.tooltip {
+    background-color: #eee;
+    border-left:6px solid #8f8779;
+    border-right:6px solid #8f8779;
+    border-top:2px solid #8f8779;
+    border-bottom:2px solid #8f8779;
+    position: absolute;
+    opacity: 0;
+    color:black;
+    font-size: 15px;
+    padding: 10px;
+    pointer-events: none;
+    text-align: left;
+    border-radius: 10px;
+  }
