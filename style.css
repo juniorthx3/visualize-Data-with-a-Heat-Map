@@ -1,5 +1,5 @@
 body{
-    background: linear-gradient(270deg,#bebebe 50%, #989898 50%);
+    background: linear-gradient(100deg,#bebebe 50%, #cecece 50%);
     font-family: sans-serif;
 }
 
@@ -12,11 +12,7 @@ body{
 
 svg{
     background-color:#eee;
-    border-left:15px solid #8f8779;
-    border-right:15px solid #8f8779;
-    border-top:2px solid #8f8779;
-    border-bottom:2px solid #8f8779;
-    border-radius: 10px;
+    box-shadow: 0px 10px 20px 10px #8f8779;
 }
 
 rect{
