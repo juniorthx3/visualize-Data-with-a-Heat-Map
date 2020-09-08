@@ -15,10 +15,10 @@ svg{
     box-shadow: 0px 10px 20px 10px #8f8779;
 }
 
-rect{
+/* rect{
     fill:#FFAF12;
     opacity:0.3;
-}
+} */
 
 rect:hover{
     fill:white;
@@ -27,8 +27,8 @@ rect:hover{
 
 .tooltip {
     background-color: #eee;
-    border-left:6px solid #8f8779;
-    border-right:6px solid #8f8779;
+    border-left:10px solid #8f8779;
+    border-right:10px solid #8f8779;
     border-top:2px solid #8f8779;
     border-bottom:2px solid #8f8779;
     position: absolute;
@@ -38,5 +38,4 @@ rect:hover{
     padding: 10px;
     pointer-events: none;
     text-align: left;
-    border-radius: 10px;
   }

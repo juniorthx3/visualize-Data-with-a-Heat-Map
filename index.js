@@ -8,7 +8,7 @@ fetch("https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/maste
        const {baseTemperature, monthlyVariance}=response;
        const data=monthlyVariance.map(d=>({
            ...d,
-           temp: baseTemperature - d.variance
+           baseTemperature: baseTemperature - d.variance
        }))
        
     //XSCALE
@@ -23,13 +23,16 @@ fetch("https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/maste
     const yScale=d3.scaleLinear()
                    .domain([0, 11])
                    .range([0, height]);
-    g.append("g").attr("id","y-axis").call(d3.axisLeft(yScale).tickFormat(month=>{
+    g.append("g").attr("id","y-axis").call(d3.axisLeft(yScale)
+    .tickFormat(month=>{
         const date=new Date();
         date.setUTCMonth(month);
         return d3.timeFormat("%B")(date);
     }));
-    //color
-    const color=d3.scaleOrdinal(["#C0C0C0","#808080",,"#FFFF00", "#808000","#008000","#800000","#FF0000"]);
+
+    //color SCALE 
+    //const colors=d3.scaleOrdinal(["#C0C0C0","#808080",,"#FFFF00", "#808000","#008000","#800000","#FF0000"]);
+    const colors=d3.scaleOrdinal(d3.schemeCategory10);
 
     //TITLE
     svg.append("text")
@@ -61,7 +64,7 @@ fetch("https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/maste
         .text("Months");
 
 
-        //const tooltip=d3.select("body").append("div").attr("class","tooltip").attr("id", "tooltip").style("opacity", 0);
+    const tooltip=d3.select("body").append("div").attr("class","tooltip").attr("id", "tooltip").style("opacity", 0);
   
     g.selectAll("rect")
        .data(data)
@@ -76,17 +79,17 @@ fetch("https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/maste
        .attr("width", 10)
        .attr("height", 10)
        .attr("fill",d=>{
-            return d=>color(d.baseTemperature)
+            return colors(d.baseTemperature)
         })
-        //     .on("mouseover", d => { 
-        //      tooltip.style("opacity", 0.9);
-        //      tooltip.attr("data-year", d.Year);
-        //      tooltip.html(d.Name + ", "+ d.Nationality +"<br />"+"Year: "+ d.Year + ', Time: ' +d.Time +"<br />"+d.Doping)
-        //     .style("left", d3.event.pageX + "px")
-        //     .style("top", d3.event.pageY - 28 + "px");
-        //     })   
-        //     .on("mouseout", d => {
-        //      tooltip.style("opacity", 0);
-        //     });
+            .on("mouseover", d => { 
+             tooltip.style("opacity", 0.9);
+             tooltip.attr("data-year", d.year);
+             tooltip.html(d.year + ", "+ d.month +"<br />"+ d.baseTemperature + " ℃"+"<br />"+ d.variance)
+            .style("left", d3.event.pageX + "px")
+            .style("top", d3.event.pageY - 28 + "px");
+            })   
+            .on("mouseout", d => {
+             tooltip.style("opacity", 0);
+            });
      });
      
