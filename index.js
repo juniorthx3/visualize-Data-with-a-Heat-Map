@@ -83,7 +83,7 @@ fetch("https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/maste
         })
             .on("mouseover", d => { 
              tooltip.style("opacity", 0.9);
-             tooltip.attr("data-year", d=>d.year);
+             tooltip.attr("data-year", d.year);
              tooltip.html(d.year + ", "+ d.month +"<br />"+ d.baseTemperature + " ℃"+"<br />"+ d.variance)
             .style("left", d3.event.pageX + "px")
             .style("top", d3.event.pageY - 28 + "px");
