@@ -13,7 +13,7 @@ fetch("https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/maste
        
     //XSCALE
     const xScale = d3.scaleTime()
-                     .domain([d3.min(monthlyVariance, d=>d.year), d3.max(monthlyVariance, d=>d.year)])
+                     .domain([d3.min(data, d=>d.year), d3.max(data, d=>d.year)])
                      .range([0, width]);
     g.append("g").attr("id","x-axis")
                  .attr("transform","translate(0, "+ height +")")
@@ -28,7 +28,7 @@ fetch("https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/maste
         const date=new Date();
         date.setUTCMonth(month);
         return d3.timeFormat("%B")(date);
-    }));
+    }).ticks(10));
 
     //color SCALE 
     //const colors=d3.scaleOrdinal(["#C0C0C0","#808080",,"#FFFF00", "#808000","#008000","#800000","#FF0000"]);
@@ -71,19 +71,19 @@ fetch("https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/maste
        .enter()
        .append("rect")
        .attr("class","cell")
-       .attr("data-month", d=>d.month)
+       .attr("data-month", d=>d.month - 1)
        .attr("data-year", d=>d.year)
        .attr("data-temp", d=>d.baseTemperature)
        .attr("x", d=>xScale(d.year))
        .attr("y", d=>yScale(d.month - 1))
        .attr("width", 10)
-       .attr("height", 10)
+       .attr("height", height / 11)
        .attr("fill",d=>{
             return colors(d.baseTemperature)
         })
             .on("mouseover", d => { 
              tooltip.style("opacity", 0.9);
-             tooltip.attr("data-year", d.year);
+             tooltip.attr("data-year", d=>d.year);
              tooltip.html(d.year + ", "+ d.month +"<br />"+ d.baseTemperature + " ℃"+"<br />"+ d.variance)
             .style("left", d3.event.pageX + "px")
             .style("top", d3.event.pageY - 28 + "px");
