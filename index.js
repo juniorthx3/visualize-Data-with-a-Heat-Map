@@ -92,4 +92,20 @@ fetch("https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/maste
              tooltip.style("opacity", 0);
             });
      });
+     const colors = ["#2257AF", "#448AFF", "#8CB5F9", "#D1DFF7", "#F9EDCB", "#FADD8B", "#FAD366", "#FAAC60", "#CC6942", "#D32F2F", "#B21C1C"];
+     const legend=d3.select("body")
+                    .append("svg")
+                    .attr("width", 200)
+                    .attr("height", 50)
+                    .attr("id","legend")
+                    .selectAll("rect")
+                    .data(colors)
+                    .enter()
+                    .append("rect")
+                    .attr("x", (d, i)=> i *200)
+                    .attr("y", 0)
+                    .attr("width", 200)
+                    .attr("height", 50)
+                    .attr("fill", (d, i)=>colors[i])
+                     .text("heeh")
      
