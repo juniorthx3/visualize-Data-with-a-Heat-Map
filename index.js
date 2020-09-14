@@ -1,7 +1,8 @@
 const svg=d3.select("svg"), padding=200;
 const width=svg.attr("width")-padding, height=svg.attr("height")-padding;
 const g=svg.append("g").attr("transform","translate("+ 100 +","+ 100 +")");
-const colors = ["#2257AF", "#448AFF", "#8CB5F9", "#D1DFF7", "#F9EDCB", "#FADD8B", "#FAD366", "#FAAC60", "#CC6942", "#D32F2F", "#B21C1C"];   
+//const colors = ["#2257AF", "#448AFF", "#8CB5F9", "#D1DFF7", "#F9EDCB", "#FADD8B", "#FAD366", "#FAAC60", "#CC6942", "#D32F2F", "#B21C1C"];   
+const colors = ["#2257AF", "#448AFF", "#8CB5F9", "#D1DFF7", "#F9EDCB", "#FADD8B", "#FAD366", "#FAAC60", "#CC6942", "#D32F2F", "#B21C1C"];
 const months= ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 fetch("https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/global-temperature.json")
    .then(response=>response.json())
@@ -31,10 +32,7 @@ fetch("https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/maste
     //color SCALE 
     const colorScale=d3.scaleLinear()
                        .domain([d3.min(temperature, d=>d.newTemperature), d3.max(temperature, d=>d.newTemperature)])
-                       .range([0, 3]);
-
-    //const colors=d3.scaleOrdinal(["#C0C0C0","#808080",,"#FFFF00", "#808000","#008000","#800000","#FF0000"]);
-    //const colors=d3.scaleOrdinal(d3.schemeCategory10);
+                       .range([0, 11]);
 
     //TITLE
     svg.append("text")
@@ -92,20 +90,19 @@ fetch("https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/maste
              tooltip.style("opacity", 0);
             });
      });
-     //const colors = ["#2257AF", "#448AFF", "#8CB5F9", "#D1DFF7", "#F9EDCB", "#FADD8B", "#FAD366", "#FAAC60", "#CC6942", "#D32F2F", "#B21C1C"];
      const legend=d3.select("body")
                     .append("svg")
-                    .attr("width", 200)
+                    .attr("width", 220)
                     .attr("height", 50)
                     .attr("id","legend")
                     .selectAll("rect")
                     .data(colors)
                     .enter()
                     .append("rect")
-                    .attr("x", (d, i)=> i *200)
+                    .attr("x", (d, i)=> i * 20)
                     .attr("y", 0)
-                    .attr("width", 200)
+                    .attr("width", width / colors.length)
                     .attr("height", 50)
-                    .attr("fill", (d, i)=>colors[i])
+                    .attr("fill", d=>d)
                      .text("heeh")
      

@@ -15,7 +15,7 @@ svg{
     box-shadow: 0px 10px 20px 10px #8f8779;
 }
 
-rect:hover{
+.cell:hover{
     fill:white;
     opacity: 0.5;
 }
