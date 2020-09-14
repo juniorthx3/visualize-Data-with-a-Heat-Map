@@ -1,20 +1,18 @@
 const svg=d3.select("svg"), padding=200;
 const width=svg.attr("width")-padding, height=svg.attr("height")-padding;
 const g=svg.append("g").attr("transform","translate("+ 100 +","+ 100 +")");
-            
+const colors = ["#2257AF", "#448AFF", "#8CB5F9", "#D1DFF7", "#F9EDCB", "#FADD8B", "#FAD366", "#FAAC60", "#CC6942", "#D32F2F", "#B21C1C"];   
+const months= ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 fetch("https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/global-temperature.json")
    .then(response=>response.json())
    .then(response=>{
        const {baseTemperature, monthlyVariance}=response;
-       const data=monthlyVariance.map(d=>({
-           ...d,
-           baseTemperature: baseTemperature - d.variance
-       }))
+       const temperature=monthlyVariance.map(d=>({...d,newTemperature: baseTemperature - d.variance}))
        
     //XSCALE
     const xScale = d3.scaleTime()
-                     .domain([d3.min(data, d=>d.year), d3.max(data, d=>d.year)])
-                     .range([0, width]);
+                     .domain([d3.min(temperature, d=>d.year), d3.max(temperature, d=>d.year)])
+                     .range([width, 0]);
     g.append("g").attr("id","x-axis")
                  .attr("transform","translate(0, "+ height +")")
                  .call(d3.axisBottom(xScale).tickFormat(d3.format("d")).ticks(20));
@@ -31,8 +29,12 @@ fetch("https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/maste
     }).ticks(10));
 
     //color SCALE 
+    const colorScale=d3.scaleLinear()
+                       .domain([d3.min(temperature, d=>d.newTemperature), d3.max(temperature, d=>d.newTemperature)])
+                       .range([0, 3]);
+
     //const colors=d3.scaleOrdinal(["#C0C0C0","#808080",,"#FFFF00", "#808000","#008000","#800000","#FF0000"]);
-    const colors=d3.scaleOrdinal(d3.schemeCategory10);
+    //const colors=d3.scaleOrdinal(d3.schemeCategory10);
 
     //TITLE
     svg.append("text")
@@ -67,24 +69,22 @@ fetch("https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/maste
     const tooltip=d3.select("body").append("div").attr("class","tooltip").attr("id", "tooltip").style("opacity", 0);
   
     g.selectAll("rect")
-       .data(data)
+       .data(temperature)
        .enter()
        .append("rect")
        .attr("class","cell")
        .attr("data-month", d=>d.month - 1)
        .attr("data-year", d=>d.year)
-       .attr("data-temp", d=>d.baseTemperature)
+       .attr("data-temp", d=>d.newTemperature)
        .attr("x", d=>xScale(d.year))
        .attr("y", d=>yScale(d.month - 1))
        .attr("width", 10)
-       .attr("height", height / 11)
-       .attr("fill",d=>{
-            return colors(d.baseTemperature)
-        })
+       .attr("height", height / colors.length)
+       .attr("fill",d=>colors[Math.floor(colorScale(d.newTemperature))])
             .on("mouseover", d => { 
              tooltip.style("opacity", 0.9);
              tooltip.attr("data-year", d.year);
-             tooltip.html(d.year + ", "+ d.month +"<br />"+ d.baseTemperature + " ℃"+"<br />"+ d.variance)
+             tooltip.html(d.year + ", "+ months[d.month - 1] +"<br />"+ d.newTemperature + " ℃"+"<br />"+ d.variance)
             .style("left", d3.event.pageX + "px")
             .style("top", d3.event.pageY - 28 + "px");
             })   
@@ -92,7 +92,7 @@ fetch("https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/maste
              tooltip.style("opacity", 0);
             });
      });
-     const colors = ["#2257AF", "#448AFF", "#8CB5F9", "#D1DFF7", "#F9EDCB", "#FADD8B", "#FAD366", "#FAAC60", "#CC6942", "#D32F2F", "#B21C1C"];
+     //const colors = ["#2257AF", "#448AFF", "#8CB5F9", "#D1DFF7", "#F9EDCB", "#FADD8B", "#FAD366", "#FAAC60", "#CC6942", "#D32F2F", "#B21C1C"];
      const legend=d3.select("body")
                     .append("svg")
                     .attr("width", 200)
