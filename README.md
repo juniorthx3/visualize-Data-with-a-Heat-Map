@@ -5,6 +5,6 @@
 
 This has been developed using HTML, CSS & D3
 
-Click here to check:.
+Click here to check:https://juniorthx3.github.io/visualize-Data-with-a-Heat-Map/.
 
 ![Project pic](projects.PNG)
