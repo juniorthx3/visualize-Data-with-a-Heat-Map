@@ -7,4 +7,4 @@ This has been developed using HTML, CSS & D3
 
 Click here to check:.
 
-![Project pic](project.PNG)
+![Project pic](projects.PNG)
