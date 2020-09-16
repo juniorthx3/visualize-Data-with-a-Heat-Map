@@ -1,6 +1,6 @@
 body{
     background: linear-gradient(100deg,#bebebe 50%, #cecece 50%);
-    font-family: sans-serif;
+    font-family: calibri;
 }
 
 :root{
@@ -18,6 +18,7 @@ svg{
 .cell:hover{
     fill:white;
     opacity: 0.5;
+    border:2px solid black;
 }
 
 .tooltip {
@@ -34,3 +35,5 @@ svg{
     display: flex;
     justify-content: center;
   }
+
+ 
